@@ -6,6 +6,8 @@
 |0     | 0x080808|8|
 |0     | 0x080808|8|
 
+
+![imagecodes]
 # Links
 ASCII colors
 https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters
@@ -24,3 +26,6 @@ https://www.loriswebs.com/websafecolors.html
 https://twitter.com/codigodecolores?lang=es
 https://github.com/feluxe/sty
 https://lab.lilydjwg.me/articles/vim-color-modified.html
+
+<!--links-->
+[imagecodes]:assets/xterm256.png
