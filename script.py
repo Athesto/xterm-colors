@@ -2,9 +2,28 @@
 from sys import argv
 CHROMATIC_LIGHTNESS = (0x00, 0x5F, 0x87, 0xAF, 0xD7, 0xFF)
 SYSTEM_LIGHTNESS = (0x80, 0xC0, 0xFF)
+msg = {
+    "help": '''\
+Welcome to Color scprit.
+Please USE THIS SYNTAX
+
+    {0} hexa-code
+    {0} end-number
+    {0} start-number end-number
+
+Ex.
+    {0} "#fffff"
+    {0} 19
+    {0} 127 256
+'''
+}
 
 
 def main():
+
+    if (len(argv) == 1 or argv[1] in ['--help', "-h"]):
+        print(msg["help"].format(argv[0]))
+        return
 
     if argv[1].isdigit():
         if len(argv) == 2:
@@ -24,12 +43,9 @@ def main():
                     code, val_dec), end="")
                 print("rgb({:d},{:d},{:d})".format(
                     *hex2rgb(val_dec)))
-    elif argv[1].startswith("0x"):
-        print("i'm alive")
-        val = int(argv[1], 16)
+    elif argv[1].startswith("#"):
+        val = int(argv[1][1:], 16)
         dec2code(val)
-    elif argv[1] == '-h':
-        print("run as <end> or <start> <end> or <0xFFFFF>")
 
 
 def hex2rgb(hex_num):
@@ -71,18 +87,34 @@ def dec2code(dec):
     color_diff = [min_r[1], min_g[1], min_b[1]]
     color_aprox = [min_r[2], min_g[2], min_b[2]]
 
-    print("color: {}".format(CHROMATIC_LIGHTNESS))
-    print("input: rgb({0:3d},{1:3d},{2:3d}), 0x{0:02x}{1:02x}{2:02x}".format(
-        color_r, color_g, color_b))
-    print("aprox: rgb({0:3d},{1:3d},{2:3d}), 0x{0:02x}{1:02x}{2:02x}".format(
-        *color_aprox))
-    print("dista: rgb({0:3d},{1:3d},{2:3d}) = ".format(
-        *color_diff), end="")
-    print("{}".format(sum(color_diff)))
     if diff_code == 0:
-        print("code: {}".format(chromatic_dec2code(color_aprox)))
+        code = chromatic_dec2code(color_aprox)
     else:
-        print("code: {}".format(diff_code))
+        code = diff_code
+
+    code_rgb = "rgb({0:3d},{1:3d},{2:3d})"
+    code_hex = "#{0:02x}{1:02x}{2:02x}"
+    square24 = "\033[38;2;{};{};{}m██\033[0m".format(color_r, color_g, color_b)
+    square8 = "\033[38;5;{}m██\033[0m".format(code)
+
+    code_rgb24 = code_rgb.format(color_r, color_g, color_b)
+    code_hex24 = code_hex.format(color_r, color_g, color_b)
+
+    code_rgb8 = code_rgb.format(*color_aprox)
+    code_hex8 = code_hex.format(*color_aprox)
+    code_rgb_diff = code_rgb.format(*color_diff)
+    chromatic_hex = ", ".join(["{:3x}".format(x) for x in CHROMATIC_LIGHTNESS])
+    chromatic_dec = ", ".join(["{:3d}".format(x) for x in CHROMATIC_LIGHTNESS])
+
+    print("code: {} {}".format(code, square8))
+    print()
+    print("24 bits: {} {}".format(code_rgb24, code_hex24))
+    print(" 8 bits: {} {}".format(code_rgb8, code_hex8))
+    print("   diff: {} = {}".format(code_rgb_diff, sum(color_diff)))
+    print()
+    print("valid color values")
+    print("[{}]".format(chromatic_dec))
+    print("[{}]".format(chromatic_hex))
 
 
 def chromatic_dec2code(dec):

@@ -1,7 +1,36 @@
 # XTERM colors
 
+## How to use
+ - Download the script
+```
+curl -sLo colors github.com/Athesto/xterm-colors/raw/main/script.py
+chmod u+x colors
+./colors --help
+```
+## EscapeCodes
+```
+echo -e "\e[3{16-color}m4BIT COLOR\e[0m"
+echo -e "\e[38;5;{256-color}m8BIT COLOR\e[0m"
+echo -e "\e[38;2;{red};{green};{blue}m24BIT TRUE COLOR\e[0m"
+
+echo -e "\e[31mRED\e[0m"
+echo -e "\e[38;5;161mRASPBERRY\e[0m"
+echo -e "\e[38;2;255;128;0mORANGE\e[0m"
+```
+### Alternaives to \e
+`\e` is the escape character but you can use any of its representations
+```
+(char) \e 
+(octa) \033 \0033
+(hexa) \x1b \x01b \x001b
+(unic) \u1b \u01b \u001b
+
+echo -e "\u01b[32mGREEN\e[0m"
+```
+
+
 ## GRAY-SCALE
-|value |   HEX   |DEC|
+|value |   HEX   |DEC  |
 |:----:|---------|:---:|
 |0     | 0x080808|8|
 |0     | 0x080808|8|
@@ -9,11 +38,13 @@
 
 ![imagecodes]
 # Links
-ASCII colors
-https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters
-https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
-https://misc.flogisoft.com/bash/tip_colors_and_formatting
-http://the-light.com/colclick.html
+ - [ANSI escape codes][wiki_ansi]
+ - [Flozz' Tutorial][tuto_flozz]
+ - [Interactive view, ANSI][dynamic_1]
+ - [True colors, gist][gist_trueColors]
+ - [Tutorial ANSI codes][tuto_ansi1]
+ - [Escape Codes][list_esc]
+
 http://yjlv.blogspot.com/2013/02/terminal-256-colors-scripts.html
 https://lh3.googleusercontent.com/proxy/szAMlToc8VSdZGQy3w1jn9fXVGOdgBxjeAEMpQKFUv06JRVnQN3PBwNWFmM6GuatFQlyOB2LMLhVGz5Jvg8QbQlS
 https://terminalguide.namepad.de/attr/fgcol256/
@@ -29,3 +60,9 @@ https://lab.lilydjwg.me/articles/vim-color-modified.html
 
 <!--links-->
 [imagecodes]:assets/xterm256.png
+[wiki_ansi]:https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters
+[tuto_ansi1]:https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
+[tuto_flozz]:https://misc.flogisoft.com/bash/tip_colors_and_formatting
+[dynamic_1]:http://the-light.com/colclick.html
+[gist_trueColors]:https://gist.github.com/sindresorhus/bed863fb8bedf023b833c88c322e44f9
+[list_esc]:https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
